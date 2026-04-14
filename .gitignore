@@ -1,0 +1,15 @@
+# Python virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Robot Framework artifacts
+log.html
+report.html
+output.xml
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
