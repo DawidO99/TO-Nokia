@@ -2,7 +2,7 @@
 Documentation    Zestaw testów funkcjonalnych i negatywnych dla symulatora EPC LTE.
 Resource         ../resources/EPC_Keywords.robot
 
-# Przed startem całego pliku resetujemy symulator dla pewności
+# Reset Symulatora
 Suite Setup      Reset Simulator
 
 *** Test Cases ***
