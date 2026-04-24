@@ -1,5 +1,7 @@
 import requests
 
+DEFAULT_BEARER_ID = 9
+
 class EpcSimulationLibrary:
     def __init__(self):
         self.ues = {}
@@ -16,7 +18,7 @@ class EpcSimulationLibrary:
 #tc_07 - proba podlaczenia juz aktywnego ue (test negatywny)
         if str(ue_id) in self.ues:
             raise Exception(f"error: ue {ue_id} already connected")
-        self.ues[str(ue_id)] = {"transfer": 0, "bearers": {9}}
+        self.ues[str(ue_id)] = {"transfer": 0, "bearers": {DEFAULT_BEARER_ID}}
 
     def _resolve_single_ue(self):
         if len(self.ues) != 1:
@@ -39,7 +41,7 @@ class EpcSimulationLibrary:
         target_ue_id = str(ue_id) if ue_id is not None else self._resolve_single_ue()
         if target_ue_id not in self.ues:
             raise Exception("error: ue not connected")
-        if int(bearer_id) == 9:
+        if int(bearer_id) == DEFAULT_BEARER_ID:
             raise Exception("error: default bearer cannot be removed")
         if int(bearer_id) not in self.ues[target_ue_id]["bearers"]:
             raise Exception(f"error: bearer {bearer_id} does not exist")
