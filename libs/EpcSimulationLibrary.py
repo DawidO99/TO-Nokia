@@ -16,7 +16,34 @@ class EpcSimulationLibrary:
 #tc_07 - proba podlaczenia juz aktywnego ue (test negatywny)
         if str(ue_id) in self.ues:
             raise Exception(f"error: ue {ue_id} already connected")
-        self.ues[str(ue_id)] = {"transfer": 0}
+        self.ues[str(ue_id)] = {"transfer": 0, "bearers": {9}}
+
+    def _resolve_single_ue(self):
+        if len(self.ues) != 1:
+            raise Exception("error: ue id required")
+        return next(iter(self.ues))
+
+    def add_bearer(self, bearer_id, ue_id=None):
+        target_ue_id = str(ue_id) if ue_id is not None else self._resolve_single_ue()
+        if target_ue_id not in self.ues:
+            raise Exception("error: ue not connected")
+        self.ues[target_ue_id]["bearers"].add(int(bearer_id))
+
+    def verify_bearer_exists(self, ue_id, bearer_id):
+        if str(ue_id) not in self.ues:
+            raise Exception("error: ue not connected")
+        if int(bearer_id) not in self.ues[str(ue_id)]["bearers"]:
+            raise Exception(f"error: bearer {bearer_id} does not exist for ue {ue_id}")
+
+    def remove_bearer(self, bearer_id, ue_id=None):
+        target_ue_id = str(ue_id) if ue_id is not None else self._resolve_single_ue()
+        if target_ue_id not in self.ues:
+            raise Exception("error: ue not connected")
+        if int(bearer_id) == 9:
+            raise Exception("error: default bearer cannot be removed")
+        if int(bearer_id) not in self.ues[target_ue_id]["bearers"]:
+            raise Exception(f"error: bearer {bearer_id} does not exist")
+        self.ues[target_ue_id]["bearers"].remove(int(bearer_id))
 
     def start_dl_transfer(self, ue_id, speed, bearer_id=9):
         val = int(''.join(filter(str.isdigit, speed)))

@@ -33,3 +33,15 @@ Verify UE Is Connected
 Verify UE Is Disconnected
     [Arguments]    ${id}
     EpcSimulationLibrary.Verify UE Is Disconnected    ${id}
+
+Add Bearer
+    [Arguments]    ${bearer_id}    ${ue_id}=${None}
+    EpcSimulationLibrary.Add Bearer    ${bearer_id}    ${ue_id}
+
+Verify Bearer Exists
+    [Arguments]    ${ue_id}    ${bearer_id}
+    EpcSimulationLibrary.Verify Bearer Exists    ${ue_id}    ${bearer_id}
+
+Remove Bearer
+    [Arguments]    ${bearer_id}    ${ue_id}=${None}
+    EpcSimulationLibrary.Remove Bearer    ${bearer_id}    ${ue_id}
