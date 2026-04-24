@@ -1,5 +1,3 @@
-import requests
-
 class EpcSimulationLibrary:
     def __init__(self):
         self.ues = {}
@@ -16,7 +14,9 @@ class EpcSimulationLibrary:
 #tc_07 - proba podlaczenia juz aktywnego ue (test negatywny)
         if str(ue_id) in self.ues:
             raise Exception(f"error: ue {ue_id} already connected")
-        self.ues[str(ue_id)] = {"transfer": 0}
+
+# TC_02 - po attach UE dostaje domyslny bearer 9
+        self.ues[str(ue_id)] = {"transfer": 0, "bearers": {9}}
 
     def start_dl_transfer(self, ue_id, speed, bearer_id=9):
         val = int(''.join(filter(str.isdigit, speed)))
@@ -38,6 +38,22 @@ class EpcSimulationLibrary:
 
     def verify_dl_transfer(self, ue_id, expected_speed):
         if self.ues[str(ue_id)]["transfer"] == 0: raise Exception("no transfer")
+
+    def add_bearer(self, ue_id, bearer_id):
+# TC_04 - dodanie dedykowanego bearera
+        ue_key = str(ue_id)
+        bearer = int(bearer_id)
+        if ue_key not in self.ues:
+            raise Exception("error: ue not connected")
+        self.ues[ue_key]["bearers"].add(bearer)
+
+    def verify_bearer_exists(self, ue_id, bearer_id):
+        ue_key = str(ue_id)
+        bearer = int(bearer_id)
+        if ue_key not in self.ues:
+            raise Exception("error: ue not connected")
+        if bearer not in self.ues[ue_key]["bearers"]:
+            raise Exception(f"error: bearer {bearer_id} not assigned to ue {ue_id}")
 
     def detach_ue(self, ue_id):
 # TC_03 - Pomyślne odłączenie (Detach)
