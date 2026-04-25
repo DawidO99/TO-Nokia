@@ -61,7 +61,7 @@ Already Active UE Connection Error
     [Documentation]    Test negatywny: Sprawdza, czy próba podłączenia urządzenia, które jest już podłączone, zakończy się błędem.
     [Tags]    negative
     Attach UE    id=6
-    Run Keyword And Expect Error    * Attach UE    id=6
+    Run Keyword And Expect Error    *   Attach UE    id=6
     [Teardown]    Detach UE    id=6
 
 Default Bearer Deletion Block
@@ -76,7 +76,7 @@ Transfer Limit Exceeded Error
     [Documentation]    Test negatywny: Upewnia się, że nie można ustawić prędkości transferu powyżej limitu 100 Mbps.
     [Tags]    negative    traffic
     Attach UE    id=8
-    Run Keyword And Expect Error    * Start DL Transfer    ue_id=8    speed=105Mbps
+    Run Keyword And Expect Error    *   Start DL Transfer    ue_id=8    speed=105Mbps
     [Teardown]    Detach UE    id=8
 
 # TC_10
