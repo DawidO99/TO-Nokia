@@ -41,3 +41,8 @@ Verify Bearer Exists
 Add Bearer
     [Arguments]    ${ue_id}    ${bearer_id}
     EpcSimulationLibrary.Add Bearer    ${ue_id}    ${bearer_id}
+
+Remove Bearer
+    [Arguments]    ${ue_id}    ${bearer_id}
+    Log    Usuwanie bearera ${bearer_id} dla UE ${ue_id}
+    EpcSimulationLibrary.remove_bearer    ${ue_id}    ${bearer_id}

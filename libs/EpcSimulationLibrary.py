@@ -58,3 +58,16 @@ class EpcSimulationLibrary:
     def detach_ue(self, ue_id):
 # TC_03 - Pomyślne odłączenie (Detach)
         if str(ue_id) in self.ues: del self.ues[str(ue_id)]
+
+# TC_08 - Blokada usunięcia domyślnego bearera (ID 9)
+    def remove_bearer(self, ue_id, bearer_id):
+        ue_key = str(ue_id)
+        bearer = int(bearer_id)
+
+        if ue_key not in self.ues:
+            raise Exception("error: ue not connected")
+
+        if bearer == 9:
+            raise Exception("error: cannot remove default bearer")
+
+        self.ues[ue_key]["bearers"].remove(bearer)

@@ -54,7 +54,7 @@ Downlink Transfer Initiation
 Out Of Range UE ID Error
     [Documentation]    Test negatywny: Sprawdza, czy system zwróci błąd, gdy podamy ID urządzenia spoza zakresu 0-100.
     [Tags]    negative
-    Run Keyword And Expect Error    * Attach UE    id=105
+    Run Keyword And Expect Error    *error*    Attach UE    105
 
 # TC_07
 Already Active UE Connection Error
@@ -64,13 +64,12 @@ Already Active UE Connection Error
     Run Keyword And Expect Error    * Attach UE    id=6
     [Teardown]    Detach UE    id=6
 
-# TC_08
 Default Bearer Deletion Block
-    [Documentation]    Test negatywny: Weryfikuje, czy system blokuje próbę usunięcia domyślnego bearera (ID 9).
+    [Documentation]    Test negatywny: Nie można usunąć domyślnego bearera (ID 9)
     [Tags]    negative
-    Attach UE    id=7
-    Run Keyword And Expect Error    * Remove Bearer    ue_id=7    bearer_id=9
-    [Teardown]    Detach UE    id=7
+    Attach UE    7
+    Run Keyword And Expect Error    *cannot remove default bearer*    Remove Bearer    7    9
+    [Teardown]    Detach UE    7
 
 # TC_09
 Transfer Limit Exceeded Error
